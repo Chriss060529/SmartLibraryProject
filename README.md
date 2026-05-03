@@ -65,3 +65,28 @@ To understand how different data structures handle different access patterns:
 ---
 
 ## 🏗️ Project Structure
+---
+
+## ▶️ How to Run
+
+1. Compile:
+   javac *.java
+
+2. Run:
+   java Main
+
+---
+
+## 📌 Notes
+
+* Uses recursion for BST search
+* Stack follows LIFO principle
+* Input validation handled in menu
+
+---
+
+## 💡 Learning Outcome
+
+* Understanding abstract data types (ADT)
+* Implementing real-world data structures
+* Building modular Java applications
