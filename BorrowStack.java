@@ -9,10 +9,7 @@ public class BorrowStack {
         historyStack = new Stack<>();
     }
     
-    /**
-     * Push a borrowed book onto the stack
-     * @param book The book being borrowed
-     */
+    //Push a borrowed book onto the stack
     public void push(Book book) {
         if (book != null) {
             historyStack.push(book);
@@ -22,9 +19,8 @@ public class BorrowStack {
         }
     }
     
-    /**
-     * Display all borrowed books in LIFO order (most recent first)
-     */
+
+    //Display all borrowed books in LIFO order (most recent first)
     public void show() {
         if (historyStack.isEmpty()) {
             System.out.println("📚 History is empty. No books have been borrowed yet.");
@@ -43,18 +39,12 @@ public class BorrowStack {
         System.out.println("========================================\n");
     }
     
-    /**
-     * Check if stack is empty
-     * @return true if empty, false otherwise
-     */
+    //Check if stack is empty
     public boolean isEmpty() {
         return historyStack.isEmpty();
     }
     
-    /**
-     * Get the most recent borrowed book without removing it
-     * @return Most recent book or null if empty
-     */
+    //Get the most recent borrowed book without removing it
     public Book peek() {
         if (historyStack.isEmpty()) {
             return null;
@@ -62,10 +52,7 @@ public class BorrowStack {
         return historyStack.peek();
     }
     
-    /**
-     * Get the total number of books borrowed
-     * @return size of history
-     */
+    //Get the total number of books borrowed
     public int size() {
         return historyStack.size();
     }
