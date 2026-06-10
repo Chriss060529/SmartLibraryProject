@@ -13,9 +13,9 @@ public class BorrowStack {
     public void push(Book book) {
         if (book != null) {
             historyStack.push(book);
-            System.out.println("✅ Book borrowed successfully: " + book.title);
+            System.out.println("Book borrowed successfully: " + book.title);
         } else {
-            System.out.println("❌ Error: Cannot borrow a null book.");
+            System.out.println("Error: Cannot borrow a null book.");
         }
     }
     
@@ -23,17 +23,17 @@ public class BorrowStack {
     //Display all borrowed books in LIFO order (most recent first)
     public void show() {
         if (historyStack.isEmpty()) {
-            System.out.println("📚 History is empty. No books have been borrowed yet.");
+            System.out.println("History is empty. No books have been borrowed yet.");
             return;
         }
         
-        System.out.println("\n📖 BORROWING HISTORY (Most Recent First):");
+        System.out.println("\n BORROWING HISTORY (Most Recent First):");
         System.out.println("========================================");
         
         // Display from top of stack (most recent) to bottom
         for (int i = historyStack.size() - 1; i >= 0; i--) {
             Book book = historyStack.get(i);
-            System.out.println((historyStack.size() - i) + ". [ISBN: " + book.isbn + "] → \"" + book.title + "\" by " + book.author);
+            System.out.println((historyStack.size() - i) + ". [ISBN: " + book.isbn + "] -> \"" + book.title + "\" by " + book.author);
         }
         
         System.out.println("========================================\n");

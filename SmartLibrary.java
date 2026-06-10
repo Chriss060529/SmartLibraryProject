@@ -7,25 +7,48 @@ class SmartLibrary implements LibraryADT {
     private Scanner sc = new Scanner(System.in);
 
     public void addBook(int isbn, String title, String author) {
-        catalogue.insert(isbn, title, author);
-        System.out.println("✅ Book added: \"" + title + "\" by " + author + " (ISBN: " + isbn + ")");
+
+        if (catalogue.insert(isbn, title, author)) {
+            System.out.println("Book added: \"" + title + "\" by " + author + " (ISBN: " + isbn + ")");
+        } else {
+            System.out.println("Warning: ISBN " + isbn + " is already in use. Book was not added.");
+        }
+
     }
 
     public void searchBook(int isbn) {
         Book b = catalogue.search(isbn);
         if (b != null) {
-            System.out.println("🔎 Found: [ISBN: " + b.isbn + "] \"" + b.title + "\" by " + b.author);
+            System.out.println("Found: [ISBN: " + b.isbn + "] \"" + b.title + "\" by " + b.author);
         } else {
-            System.out.println("❌ Not Found. No book with ISBN " + isbn + " in catalogue.");
+            System.out.println("Not Found. No book with ISBN " + isbn + " in catalogue.");
         }
     }
 
     public void borrowBook(int isbn) {
         Book b = catalogue.search(isbn);
-        if (b != null) {
+
+        if (b != null && !b.isBorrowed) {
+            b.isBorrowed = true;
             history.push(b);
+            System.out.println("Book borrowed.");
         } else {
-            System.out.println("❌ Book not in catalogue. Cannot borrow ISBN " + isbn + ".");
+            System.out.println("Book not available for borrowing.");
+        }
+    }
+
+    public void returnBook(int isbn) {
+        Book b = catalogue.search(isbn);
+
+        if (b == null) {
+            System.out.println("Warning: No book found with ISBN " + isbn + ".");
+        } 
+        else if (!b.isBorrowed) {
+            System.out.println("Warning: This book has not been borrowed.");
+        } 
+        else {
+            b.isBorrowed = false;
+            System.out.println("Book returned successfully.");
         }
     }
 
@@ -35,7 +58,7 @@ class SmartLibrary implements LibraryADT {
 
     public void runMenu() {
         System.out.println("=========================================");
-        System.out.println("   📚 Welcome to the Smart Library");
+        System.out.println("      Welcome to the Smart Library");
         System.out.println("=========================================");
 
         while (true) {
@@ -47,13 +70,13 @@ class SmartLibrary implements LibraryADT {
                 choice = sc.nextInt();
                 sc.nextLine();
             } catch (InputMismatchException e) {
-                System.out.println("⚠️  Invalid input. Please enter a number between 1 and 5.");
+                System.out.println("Invalid input. Please enter a number between 1 and 6.");
                 sc.nextLine();
                 continue;
             }
 
-            if (choice == 5) {
-                System.out.println("👋 Exiting Smart Library. Goodbye!");
+            if (choice == 6) {
+                System.out.println("Exiting Smart Library. Goodbye!");
                 break;
             }
 
@@ -68,8 +91,9 @@ class SmartLibrary implements LibraryADT {
         System.out.println("1. Add Book");
         System.out.println("2. Search Book");
         System.out.println("3. Borrow Book");
-        System.out.println("4. View History");
-        System.out.println("5. Exit");
+        System.out.println("4. Return Book");
+        System.out.println("5. View History");
+        System.out.println("6. Exit");
     }
 
     private void handleChoice(int choice) {
@@ -82,7 +106,7 @@ class SmartLibrary implements LibraryADT {
                 System.out.print("Enter Author: ");
                 String author = sc.nextLine().trim();
                 if (title.isEmpty() || author.isEmpty()) {
-                    System.out.println("⚠️  Title and author cannot be empty.");
+                    System.out.println("Title and author cannot be empty.");
                     return;
                 }
                 addBook(isbn, title, author);
@@ -100,11 +124,22 @@ class SmartLibrary implements LibraryADT {
                 borrowBook(isbn);
                 break;
             }
-            case 4:
+            case 4: {
+                int isbn = readIsbn("Enter ISBN to return: ");
+                if (isbn == -1) return;
+                returnBook(isbn);
+                break;
+            }
+            case 5:{    
                 viewLatestHistory();
                 break;
+            }
+            case 6: {
+                System.out.println("Exiting Smart Library. Goodbye!");
+                System.exit(0);
+            }
             default:
-                System.out.println("⚠️  Invalid option. Please choose 1-5.");
+                System.out.println("Invalid option. Please choose 1-6.");
         }
     }
 
@@ -115,7 +150,7 @@ class SmartLibrary implements LibraryADT {
             sc.nextLine();
             return isbn;
         } catch (InputMismatchException e) {
-            System.out.println("⚠️  Invalid ISBN. Must be an integer.");
+            System.out.println("Invalid ISBN. Must be an integer.");
             sc.nextLine();
             return -1;
         }

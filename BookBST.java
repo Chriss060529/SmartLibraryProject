@@ -1,8 +1,13 @@
 class BookBST {
     private Book root;
 
-    public void insert(int isbn, String title, String author) {
+    public boolean insert(int isbn, String title, String author) {
+        if (search(isbn) != null) {
+            return false;
+        }
+
         root = insertRec(root, isbn, title, author);
+        return true;
     }
 
     private Book insertRec(Book current, int isbn, String title, String author) {
@@ -14,6 +19,8 @@ class BookBST {
             current.left = insertRec(current.left, isbn, title, author);
         } else if (isbn > current.isbn) {
             current.right = insertRec(current.right, isbn, title, author);
+        } else {
+            System.out.println("Warning: ISBN " + isbn + " is already in use. Book was not added.");
         }
 
         return current;
