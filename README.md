@@ -1,3 +1,12 @@
+# 🏫 Group Members
+
+1. Choi Jin Seng 24063469
+2. Lee Ke Yin 22112636
+3. Lim Kai Hern 23116000
+4. Chriss Fun Kai Qing 23117185
+
+---
+
 # 📚 Smart Library System
 
 A Java console-based library system that demonstrates the use of **Binary Search Trees (BST)** and **Stack** data structures.
